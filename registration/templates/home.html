@@ -5273,8 +5273,89 @@
                             </div>
                         </div>
                     </div>
-                   
-                    {%if userDetails%}
+                    {% comment %} <div id="widget_manual_header_button-2" class="theme-widget widget_widget_manual_header_button">
+                        <div><b style="color:red;"> Hello<b></div>
+                         
+                         <div><a onclick="cls()"
+                                 style="min-height:auto; margin:5px 0px 0px 0px;padding:10px 22px 10px 22px;"
+                                 class="custom-botton mt__widget_btm_hover_4125">
+                                 <span class="button-text" class="btn btn-info btn-round"  style="font-size:14px; "> Logout </span>
+                                 
+                                 {% comment %} <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">
+                                     Login
+                                   </button>  {% endcomment %}
+                             {% comment %} </a></div>
+                             
+                     </div>  {% endcomment %}
+             {% comment %} {%if user%}
+
+                    <ul id="menu-header-menu" class="nav navbar-nav ">
+                        <li id="menu-item-1896"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-1892 current_page_item active">
+                            <a href="https://manual.smartwpthemes.com/lms/">Home</a></li>
+                        <li id="menu-item-2498"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children has-sub">
+                            <a href="https://manual.smartwpthemes.com/lms/courses/">About<i></i></a> <i
+                              class="mobile_menu_arrow fa fa-caret-down"></i></li>
+                        <li id="menu-item-1897"
+                              class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory menu-item-has-children has-sub">
+                            <a href="https://manual.smartwpthemes.com/lms/faq/wordpress-themes/">Dashboard <i
+                                      class="menu_arrow_first_level fa fa-caret-down"></i></a> <i
+                                  class="mobile_menu_arrow fa fa-caret-down"></i>
+                            <ul class="sub-menu">
+                                  <li id="menu-item-1904"
+                                      class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                          href="https://manual.smartwpthemes.com/lms/faq/private-faq/">My Enquiry</a></li>
+                                  <li id="menu-item-1905"
+                                      class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                          href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">My Account</a></li>
+                                  <li id="menu-item-1905"
+                                      class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                          href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">Change Password</a></li>
+                              </ul>
+      
+                          </li>
+    
+                          <li id="menu-item-1897"
+                          class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory menu-item-has-children has-sub">
+                        <a href="https://manual.smartwpthemes.com/lms/faq/wordpress-themes/">Reports <i
+                                  class="menu_arrow_first_level fa fa-caret-down"></i></a> <i
+                              class="mobile_menu_arrow fa fa-caret-down"></i>
+                        <ul class="sub-menu">
+                              <li id="menu-item-1904"
+                                  class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                      href="https://manual.smartwpthemes.com/lms/faq/private-faq/">Tickets Reports</a></li>
+                              <li id="menu-item-1905"
+                                  class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                      href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">Status Reports</a></li>
+                              <li id="menu-item-1905"
+                                  class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                      href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">User Reports</a></li>
+                          </ul>
+    
+                      </li>
+               
+                {%else%}  {% endcomment %}
+                {%if users%}
+                <div id="widget_manual_header_button-2" class="theme-widget widget_widget_manual_header_button">
+                    <div><b style="color:red;"> Hello, {{usernames}}<b></div>
+                     
+                     <div><a onclick="clss()"
+                             style="min-height:auto; margin:5px 0px 0px 0px;padding:10px 22px 10px 22px;"
+                             class="custom-botton mt__widget_btm_hover_4125">
+                             <span class="button-text" class="btn btn-info btn-round"  style="font-size:14px; "> Logout </span>
+                             
+                             {% comment %} <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">
+                                 Login
+                               </button>  {% endcomment %}
+                         </a></div>
+                         
+                 </div>
+             {%else%}
+
+
+
+                   {%if userDetails%}
                     
                     
                     <div id="widget_manual_header_button-2" class="theme-widget widget_widget_manual_header_button">
@@ -5305,6 +5386,7 @@
                             
                     </div>
                     {% endif %}
+            {%endif%}
 
                     
 
@@ -5318,7 +5400,7 @@
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children has-sub">
                         <a href="https://manual.smartwpthemes.com/lms/courses/">About<i></i></a> <i
                             class="mobile_menu_arrow fa fa-caret-down"></i></li>
-                        {%if userDetails%}
+                        {%if userDetails or users%}
                         {% comment %} <ul class="sub-menu">
                             <li id="menu-item-2497" class="menu-item menu-item-type-post_type menu-item-object-page"><a
                                     href="https://manual.smartwpthemes.com/lms/courses/">Issue related to device</a></li>
@@ -5361,13 +5443,40 @@
                         </ul>
 
                     </li> 
+                    {%endif%}
+                    {%if users%}
+                    <li id="menu-item-1897"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory menu-item-has-children has-sub">
+                  <a href="">Reports <i
+                            class="menu_arrow_first_level fa fa-caret-down"></i></a> <i
+                        class="mobile_menu_arrow fa fa-caret-down"></i>
+                  <ul class="sub-menu">
+                        <li id="menu-item-1904"
+                            class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                href="myTicket2">Tickets Reports</a></li>
+                        <li id="menu-item-1905"
+                            class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">Status Reports</a></li>
+                        <li id="menu-item-1905"
+                            class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                                href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">User Reports</a></li>
+                    </ul>
+
+                </li>
+         
+                    {%endif%}
+                
+                    {%if userDetails%}
                     <li id="menu-item-2015" class="menu-item menu-item-type-post_type menu-item-object-page"><a
                             href="tickets">Raise Ticket</a></li>
                     <li id="menu-item-2015" class="menu-item menu-item-type-post_type menu-item-object-page"><a
                             href="myTicket">My Ticket</a></li>
-                    <li id="menu-item-2015" class="menu-item menu-item-type-post_type menu-item-object-page"><a
-                            href="https://manual.smartwpthemes.com/lms/news/">My Account</a></li>
                     {%endif%}
+                    {%if userDetails%}
+                    <li id="menu-item-2015" class="menu-item menu-item-type-post_type menu-item-object-page"><a
+                            href="myAcc">My Account</a></li>
+                     {%endif%}       
+                    
                     <li id="menu-item-2518"
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children has-sub">
                         <a href="https://manual.smartwpthemes.com/lms/shop/">Contact Us <i
@@ -5385,7 +5494,9 @@
                                     href="https://manual.smartwpthemes.com/lms/checkout/">Checkout</a></li>
                         </ul> {% endcomment %}
                     </li>
+                
                 </ul>
+        
             </div>
         </div>
     </nav>
@@ -5452,8 +5563,11 @@
                         <li class="menu-item menu-item-type-post_type menu-item-object-page"><a
                                 href="https://manual.smartwpthemes.com/lms/checkout/">Checkout</a></li>
                     </ul>
+            {% comment %} {%endif%} {% endcomment %}
                 </li>
+               
             </ul>
+            
         </div>
     </div>
     <!-- HEADER CONTROL -->
@@ -6617,6 +6731,15 @@
             if(confirm("Unsaved data may be deleted \n Are you sure"))
             {
                 window.location.replace("/")
+            }
+        }
+    </script>
+    <script>
+        function clss()
+        {
+            if(confirm("Unsaved data may be deleted "))
+            {
+                window.location.replace("adminLog")
             }
         }
     </script>

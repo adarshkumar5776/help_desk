@@ -4,6 +4,7 @@ from django.db import models
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 # class Country(models.Model):
 #     name = models.CharField(max_length=40)
@@ -20,11 +21,13 @@ from django.utils import timezone
 #         return self.name
 
 
-class regData(models.Model):
+
+
+class regData(AbstractUser):
     
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
+
     email = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     # country = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -35,14 +38,36 @@ class regData(models.Model):
     mobile_no= models.BigIntegerField()
     password=models.CharField(max_length= 200)
 
+
 class Ticket(models.Model):
+    appli=models.ForeignKey(regData,on_delete=models.CASCADE)
     title = models.CharField(max_length=254)
     priority=models.CharField(max_length=50)
     status=models.CharField(max_length=50)
     description=models.TextField(max_length=200)
+    dateTime = models.DateTimeField(default=timezone.now)
+
+class user_admin(models.Model):
+    
+    first_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
+    password=models.CharField(max_length= 200)
+
+class comments(models.Model):
+    Comments=models.TextField()
+    ticket_id=models.ForeignKey(Ticket,on_delete=models.CASCADE)
+    
+
+    
+    # country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    # city = models.ForeignKey(City, on_delete=models.CASCADE)
+    
+    
+   
      #check for default value
     # creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-    # dateTime = models.DateTimeField(default=timezone.now)
+    
     # lastUpdate = models.DateTimeField(auto_now=True)
 
     # States = (

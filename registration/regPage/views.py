@@ -1,15 +1,22 @@
 from email import message
-import re
+import http
+from http.client import HTTPResponse
+from multiprocessing import context
+
 from sre_parse import State
 from token import RIGHTSHIFTEQUAL
-from turtle import title
-from xmlrpc.client import DateTime
-from django.shortcuts import render,redirect
+import datetime
+from xml.etree.ElementTree import Comment
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.contrib import messages
-# from django.contrib.auth.models import User, auth
-from regPage.models import regData
+from django.contrib.auth.models import User, auth
+from regPage.models import regData, user_admin
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 from regPage.models import Ticket
+from regPage.models import comments
+from django.contrib.auth import authenticate,login,logout
+
 
 
 
@@ -25,36 +32,152 @@ from regPage.models import Ticket
 
 # def helpDesk(request):
 #     return render(request, 'helpDesk.html')
+
+# def view3(request,id):
+#     if request.method=="POST":
+#         ticket_id=id
+#         print(ticket_id)
+#         comment=request.POST.get('comment')
+#         saverec=comments(Comments=comment,ticket_id_id=ticket_id)
+#         saverec.save()
+#         return HttpResponseRedirect("") 
+#     else:
+#         return render(request,'comment.html')
+
+
+
+def myAcc(request):
+    # users = request.user.ticket_set.filter(appli_id = request.user.id)
+    count=Ticket.objects.filter(appli_id=request.user.id).count()
+    return render (request,'myAccount.html',{'count':count})
+
+
+def view(request, id):
+      
+
+     users = request.user.ticket_set.filter(appli_id = request.user.id)
+
+     com=comments.objects.filter(ticket_id=id)
+     ticket = users.get(id = id)
+    
+     return render(request,'view.html',{'ticket':ticket ,'com':com})
+
+def view1(request,id):
+    if request.method=="POST":
+        
+        emp = Ticket.objects.get(pk = id)
+        emp.status = 'closed'
+        emp.save()
+    
+        ticket_id=id
+        print(ticket_id)
+        comment=request.POST.get('comment')
+        saverec=comments(Comments=comment,ticket_id_id=ticket_id)
+        saverec.save()
+        admin =True
+        ticket = Ticket.objects.get(id = id)
+        return render(request,'view.html',{'ticket':ticket, 'admin': admin})
+      
+    else:
+   
+    # datas=Ticket.objects.all()
+     ticket = Ticket.objects.get(id = id)
+    # datas = Ticket.objects.filter(appli_id=y)
+     admin =True
+     return render(request,'view.html',{'ticket':ticket, 'admin': admin})
+
+def delete(request):
+    if request.method == "POST":
+      identity = request.POST.get("delete")
+    #   print(identity)
+      member = Ticket.objects.get(id=int(identity))
+      member.delete()
+      return HttpResponseRedirect("myTicket")
+    return render(request , 'myticket.html')
+
+def admin(request):
+    if request.method == 'POST':
+        try:
+            usernames=request.POST['username']
+            # password =request.POST['password']
+            users=user_admin.objects.get(username=request.POST['username'],password=request.POST['password'])
+            return render(request,'home.html',{'users':users,'usernames':usernames})
+        except:
+            return redirect('admin')
+    return render(request,'adminLogin.html')
+
+def adminReg(request):
+     if request.method=="POST":
+            full_name=request.POST.get('full_name')
+            username=request.POST.get('username')
+            email=request.POST.get('email')
+            password=request.POST.get('password')
+            saverecord = user_admin(first_name=full_name,username=username,email=email,password=password)
+            saverecord.save()
+            return render(request,'adminLogin.html')
+            
+     else:
+          return render(request,'adminReg.html')
+
+# def user_admin(request):
+#     data = regData.objects.all()
+#     return render(request,"admin.html",{"data":data})
+
 def tickets(request):
     if request.method=="POST":
+        appli = request.user.id
         title=request.POST.get('title')
         status=request.POST.get('status')
         priority=request.POST.get('Priority')
         description=request.POST.get('description')
-        saverec = Ticket(title=title,priority=priority,description=description,status=status)
+        saverec = Ticket(appli_id = appli, title=title,priority=priority,description=description,status=status)
         saverec.save()
-        return render(request,'home.html')
+        return render(request,'raiseTicket.html')
+        # return HttpResponseRedirect('tickets')
     else:   
          return render(request,'raiseTicket.html')
 
 def Myticket(request):
-    return render(request,'myTicket.html')   
+    # current_datetime = datetime.datetime.now()
+    
+    
+    
+    data=Ticket.objects.all()
+    # datas=regData.objects.all()
+   
+    return render(request,'myTicket.html',{'data':data}) 
+      
+def Myticket2(request):
+    # current_datetime = datetime.datetime.now()
+    data=Ticket.objects.all()
+    # datas=regData.objects.all()
+    userData=True
+    return render(request,'myTicket.html',{'data':data,'userData':userData}) 
 
 def home(request):
     return render(request,'home.html')
 
-def login(request):
+def log_in(request):
+    
     if request.method == 'POST':
-        
+    #     try:
+    #         username =request.POST['username']
+    #         userdetails=regData.objects.get(username=request.POST['username'],password=request.POST['password'])
+    #         return render(request,'home.html',{'userDetails':userdetails,'username':username})
+    #     except regData.DoesNotExist as e:
+    #         return render(request,'login.html')
+
         username =request.POST['username']
-        # password =request.POST['password']
-        try:
-            userDetails=0
-            userDetails=regData.objects.get(username=request.POST['username'],password=request.POST['password'])
-            return render(request,'home.html',{'userDetails':userDetails,'username':username})
-        except regData.DoesNotExist as e:
-            #  messages.info(request,'Invalid Credentials')
-             return render(request,'login.html' )
+        password =request.POST['password']
+        user = regData.objects.get(username=username)
+        if user.password == password:
+            login(request, user)
+            # return redirect('home')
+            return render(request,'home.html',{'userDetails':user,'username':username})
+        else:
+            # messages.error(request +"Username/Password is invalid")
+            return HttpResponseRedirect("login")
+
 
     else:
         return render(request,'login.html')
@@ -82,8 +205,13 @@ def login(request):
             
      
 
+# def logout(request):
+#     auth.logout(request)
+#     return redirect("/")
+    # return render(request,'home.html')
 def logout(request):
-    return render(request,'home.html')
+  logout(request)
+      
 
 def register(request):
     if request.method=="POST":
@@ -105,7 +233,7 @@ def register(request):
                 elif regData.objects.filter(email=email).exists():
                     messages.info(request,'email Taken')
                     return redirect('register')
-                elif len(mobile_no)!=12:
+                elif len(mobile_no)!=10:
                     messages.info(request,"Invalid Mobile Number")
                     return redirect('register')
                 else:
