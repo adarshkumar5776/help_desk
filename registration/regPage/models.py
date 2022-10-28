@@ -1,4 +1,5 @@
 from email.policy import default
+from enum import unique
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.db import models
@@ -38,10 +39,19 @@ class regData(AbstractUser):
     mobile_no= models.BigIntegerField()
     password=models.CharField(max_length= 200)
 
+class activeUser(models.Model):
+    time=models.ForeignKey(regData,on_delete=models.CASCADE,primary_key=True)
+    login_time=models.TimeField(null=True)
+    logout_time=models.TimeField(null=True)
+    TotalActiveTime=models.TimeField(null=True)
+    # TotalActiveTime1=models.CharField(max_length=100,null=True)
+
+
 
 class Ticket(models.Model):
     appli=models.ForeignKey(regData,on_delete=models.CASCADE)
     title = models.CharField(max_length=254)
+    issueType=models.CharField(max_length=100)
     priority=models.CharField(max_length=50)
     status=models.CharField(max_length=50)
     description=models.TextField(max_length=200)

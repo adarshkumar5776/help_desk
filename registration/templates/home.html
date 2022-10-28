@@ -5261,14 +5261,16 @@
                                         class="header_cart_span">0</span></a>
                                 <div class="shopping_cart_dropdown">
                                     <div class="shopping_cart_dropdown_inner">
-                                        <ul class="cart_list product_list_widget">
-                                            <li>No tickets are active.</li>
-                                        </ul>
-                                    </div><a href="https://manual.smartwpthemes.com/lms/cart/"
+                                       
+                                    
+                                    </div>
+                                    {%if userDetails%}
+                                    <a href="myTicket"
                                         class="qbutton white view-cart">Tikets<i
                                             class="fa fa-shopping-basket"></i></a><span class="total">Total:<span><span
                                                 class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol"></span>0</bdi></span></span></span>
+                                                        class="woocommerce-Price-currencySymbol"></span>{{count}}</bdi></span></span></span>
+                                    {%endif%}
                                 </div>
                             </div>
                         </div>
@@ -5336,6 +5338,7 @@
                       </li>
                
                 {%else%}  {% endcomment %}
+                
                 {%if users%}
                 <div id="widget_manual_header_button-2" class="theme-widget widget_widget_manual_header_button">
                     <div><b style="color:red;"> Hello, {{usernames}}<b></div>
@@ -5360,8 +5363,8 @@
                     
                     <div id="widget_manual_header_button-2" class="theme-widget widget_widget_manual_header_button">
                        <div><b style="color:red;"> Hello, {{username}}<b></div>
-                        
-                        <div><a onclick="cls()"
+                        {% comment %} onclick="cls()" {% endcomment %}
+                        <div><a  href="logout"     
                                 style="min-height:auto; margin:5px 0px 0px 0px;padding:10px 22px 10px 22px;"
                                 class="custom-botton mt__widget_btm_hover_4125">
                                 <span class="button-text" class="btn btn-info btn-round"  style="font-size:14px; "> Logout </span>
@@ -5384,6 +5387,7 @@
                                   </button>  {% endcomment %}
                             </a></div>
                             
+                            
                     </div>
                     {% endif %}
             {%endif%}
@@ -5396,10 +5400,10 @@
                     <li id="menu-item-1896"
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-1892 current_page_item active">
                         <a href="https://manual.smartwpthemes.com/lms/">Home</a></li>
-                    <li id="menu-item-2498"
+                    {% comment %} <li id="menu-item-2498"
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children has-sub">
                         <a href="https://manual.smartwpthemes.com/lms/courses/">About<i></i></a> <i
-                            class="mobile_menu_arrow fa fa-caret-down"></i></li>
+                            class="mobile_menu_arrow fa fa-caret-down"></i></li> {% endcomment %}
                         {%if userDetails or users%}
                         {% comment %} <ul class="sub-menu">
                             <li id="menu-item-2497" class="menu-item menu-item-type-post_type menu-item-object-page"><a
@@ -5439,13 +5443,16 @@
                                     href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">My Account</a></li>
                             <li id="menu-item-1905"
                                 class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
-                                    href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">Change Password</a></li>
+                                    href="changePass">Change Password</a></li>
                         </ul>
 
                     </li> 
                     {%endif%}
                     {%if users%}
-                    <li id="menu-item-1897"
+                    <li id="menu-item-1905"
+                    class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory"><a
+                        href="myTicket2">Tickets Reports</a></li>
+                    {% comment %} <li id="menu-item-1897"
                     class="menu-item menu-item-type-taxonomy menu-item-object-manualfaqcategory menu-item-has-children has-sub">
                   <a href="">Reports <i
                             class="menu_arrow_first_level fa fa-caret-down"></i></a> <i
@@ -5462,7 +5469,7 @@
                                 href="https://manual.smartwpthemes.com/lms/faq/developer-documentation/">User Reports</a></li>
                     </ul>
 
-                </li>
+                </li> {% endcomment %}
          
                     {%endif%}
                 
@@ -5576,8 +5583,14 @@
             <div class="container inner-margin-top">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 header_control_text_align">
-                        <h1 class="inner-header custom_h1_head">Helping In 28+ Services</h1>
+                        {%if users%}
+                        <h1 class="inner-header custom_h1_head">Customers happiness is our goal!</h1>
+                        <p class="inner-header-color">  Always put the customer first </p>
+                        {%endif%}
+                        {%if userDetails%}
+                        <h1 class="inner-header custom_h1_head">Helping In 3+ Services</h1>
                         <p class="inner-header-color">Our Skilled Experts are always available to help you </p>
+                        {%endif%}
                         <div class="col-md-7 col-sm-12 class-pg-searchbox-fix search-margin-top">
                             <div class="global-search"><input type="hidden" id="oldplacvalue" value="Search services... ">
                                 <form role="search" method="get" id="searchform" class="searchform"

@@ -56,11 +56,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HappyHD</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      </style>
 
 </head>
 
       <body>
-        {% if userData%}
+
+        {% if filt%}
         <h1><b><center>ALL TICKETS</h1></b></center>
 
       <div class="container col-sm-12">
@@ -82,11 +88,82 @@
                                </div><br><br>
 
                                     <div class="table-bordered table-hover table-responsive" style="width: 100%">
-                                        <table class="table" id="ticketTable" style="background-color:dimgray">
+                                        <table class="table" cellspacing="3" border="0" id="ticketTable" style="background-color:dimgray">
                                             <thead>
                                             <tr>
                                                 <th>UserName</th>
-                                                <th>Email</th> 
+                                                <th>Priority</th> 
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Date And Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody> 
+                                              {%for x in data%}
+                                                {%if x.priority == priority%}
+                                                 {%if x.status == status%}
+                                                
+                                              <tr>
+                                               
+                                                <td>{{x.appli.username}}</td>
+                                                <td>{{x.priority}}</td> 
+                                                <td>{{x.title}}</td>
+                                                <td>{{x.status}}</td>
+                                                <td>{{x.dateTime}}</td>
+                                                <td> <form action="delete" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view1' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete">Cancel</button>  </form> </td>
+                                              </tr>
+                                                  {%endif%}
+                                                 {%endif%}
+                                              {%endfor%}
+                                            
+                                          
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% comment %} <div id="outerDiv"></div>
+                  <center><a href="filter">
+                    <button type="button" class="btn btn-danger" >Filter</button>
+                   </a></center>  {% endcomment %}
+
+
+
+
+
+        {% elif userData%}
+        <h1><b><center>ALL TICKETS</h1></b></center>
+
+      <div class="container col-sm-12">
+                        <div class="bg-light text-dark">
+                           
+                        </div>
+
+                            <div class="jumbotron"
+                                 style="background-color:snow;">
+
+                            <div class="row">
+                                <div id="headerTicket" on></div>
+                                <div class="col-md-12 text-center">
+                                    {% comment %} <div>
+                                        <a href="tickets">
+                                         <button type="button" class="btn btn-danger" onclick="newTicket()">Add New Ticket</button>
+                                        </a>
+                                    </div> {% endcomment %}
+                               </div><br><br>
+
+                                    <div class="table-bordered table-hover table-responsive" style="width: 100%">
+                                        <table class="table" cellspacing="3" border="0" id="ticketTable" style="background-color:dimgray">
+                                            <thead>
+                                            <tr>
+                                                <th>UserName</th>
+                                                <th>Priority</th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Date And Time</th>
@@ -98,7 +175,7 @@
                                               <tr>
                                                
                                                 <td>{{x.appli.username}}</td>
-                                               <td>{{x.appli.email}}</td> 
+                                               <td>{{x.priority}}</td> 
                                                 <td>{{x.title}}</td>
                                                 <td>{{x.status}}</td>
                                                 <td>{{x.dateTime}}</td>
@@ -118,6 +195,9 @@
                     </div>
 
                   <div id="outerDiv"></div>
+                  <center><a href="filter">
+                    <button type="button" class="btn btn-danger" >Filter</button>
+                   </a></center>
 
 
         {%else%}
@@ -142,11 +222,11 @@
                                </div><br><br>
 
                                     <div class="table-bordered table-hover table-responsive" style="width: 100%">
-                                        <table class="table" id="ticketTable" style="background-color:dimgray">
+                                        <table class="table" border ='1' id="ticketTable" style="background-color:dimgray">
                                             <thead>
                                             <tr>
                                                 <th>UserName</th>
-                                                <th>Email</th>
+                                                <th>Priority</th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Date And Time</th>
@@ -160,7 +240,7 @@
                                               <tr>
                                                
                                                <td>{{user.username}}</td>
-                                               <td>{{user.email}}</td>
+                                               <td>{{x.priority}}</td> 
                                                 <td>{{x.title}}</td>
                                                 <td>{{x.status}}</td>
                                                 <td>{{x.dateTime}}</td>
@@ -175,9 +255,9 @@
                                             
                                             
                                         </table>
-                                        <center><a href="view">
+                                        {% comment %} <center><a href="view">
                                           <button type="button" class="btn btn-danger" onclick="newTicket()">View Details</button>
-                                         </a></center>
+                                         </a></center> {% endcomment %}
                                     </div>
 
                             </div>

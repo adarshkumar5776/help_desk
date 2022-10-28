@@ -2,8 +2,10 @@ from email import message
 import http
 from http.client import HTTPResponse
 from multiprocessing import context
+from datetime import datetime
 
 from sre_parse import State
+from time import time
 from token import RIGHTSHIFTEQUAL
 import datetime
 from xml.etree.ElementTree import Comment
@@ -15,6 +17,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from regPage.models import Ticket
 from regPage.models import comments
+from regPage.models import activeUser
 from django.contrib.auth import authenticate,login,logout
 
 
@@ -43,8 +46,49 @@ from django.contrib.auth import authenticate,login,logout
 #         return HttpResponseRedirect("") 
 #     else:
 #         return render(request,'comment.html')
+# def back(request):
+#   next = request.POST.get('next', '/')
+#   return HttpResponseRedirect(next)
+def grid(request):
+    return render(request,"grid2.html")
+
+def changePass(request):
+    if request.method=="POST":
+        id=request.user.id
+        curr=regData.objects.get(pk=id)
+        old=request.POST.get('oldPass')
+        new=request.POST.get('newPass')
+        retype=request.POST.get('retypePass')
+        currPass=request.user.password
+        if(old==currPass):
+            if new==retype:
+                curr.password=new
+                return redirect("/")
+            else:
+                  return HttpResponseRedirect("changePass")
+        else:
+            return HttpResponseRedirect("changePass")
+    else:    
+        return render(request,'changePassword.html')
 
 
+def filter(request):
+    if request.method == "POST":
+        priority=request.POST.get('Priority')
+        status=request.POST.get('status')
+        print(status)
+
+        data=Ticket.objects.all()
+        filt=True
+        return render(request,'grid.html',{'priority':priority,'status':status,'filt':filt,'data':data})
+    else:
+    #   print('hello')
+        return render(request,'filter.html')
+
+
+
+def register(request):
+    return render(request,'register.html')
 
 def myAcc(request):
     # users = request.user.ticket_set.filter(appli_id = request.user.id)
@@ -60,13 +104,13 @@ def view(request, id):
      com=comments.objects.filter(ticket_id=id)
      ticket = users.get(id = id)
     
-     return render(request,'view.html',{'ticket':ticket ,'com':com})
+     return render(request,'view2.html',{'ticket':ticket ,'com':com})
 
 def view1(request,id):
     if request.method=="POST":
         
         emp = Ticket.objects.get(pk = id)
-        emp.status = 'closed'
+        emp.status = 'close'
         emp.save()
     
         ticket_id=id
@@ -76,7 +120,7 @@ def view1(request,id):
         saverec.save()
         admin =True
         ticket = Ticket.objects.get(id = id)
-        return render(request,'view.html',{'ticket':ticket, 'admin': admin})
+        return render(request,'view2.html',{'ticket':ticket, 'admin': admin})
       
     else:
    
@@ -84,7 +128,7 @@ def view1(request,id):
      ticket = Ticket.objects.get(id = id)
     # datas = Ticket.objects.filter(appli_id=y)
      admin =True
-     return render(request,'view.html',{'ticket':ticket, 'admin': admin})
+     return render(request,"view2.html",{'ticket':ticket, 'admin': admin})
 
 def delete(request):
     if request.method == "POST":
@@ -101,6 +145,7 @@ def admin(request):
             usernames=request.POST['username']
             # password =request.POST['password']
             users=user_admin.objects.get(username=request.POST['username'],password=request.POST['password'])
+            # login(request,users)
             return render(request,'home.html',{'users':users,'usernames':usernames})
         except:
             return redirect('admin')
@@ -127,15 +172,16 @@ def tickets(request):
     if request.method=="POST":
         appli = request.user.id
         title=request.POST.get('title')
+        issueType=request.POST.get('issue')
         status=request.POST.get('status')
         priority=request.POST.get('Priority')
         description=request.POST.get('description')
-        saverec = Ticket(appli_id = appli, title=title,priority=priority,description=description,status=status)
+        saverec = Ticket(appli_id = appli, title=title,issueType=issueType, priority=priority,description=description,status=status)
         saverec.save()
-        return render(request,'raiseTicket.html')
+        return render(request,'raiseTicket2.html')
         # return HttpResponseRedirect('tickets')
-    else:   
-         return render(request,'raiseTicket.html')
+    else:    
+         return render(request,'raiseTicket2.html')
 
 def Myticket(request):
     # current_datetime = datetime.datetime.now()
@@ -145,38 +191,54 @@ def Myticket(request):
     data=Ticket.objects.all()
     # datas=regData.objects.all()
    
-    return render(request,'myTicket.html',{'data':data}) 
+    return render(request,'grid.html',{'data':data}) 
       
 def Myticket2(request):
     # current_datetime = datetime.datetime.now()
     data=Ticket.objects.all()
     # datas=regData.objects.all()
     userData=True
-    return render(request,'myTicket.html',{'data':data,'userData':userData}) 
+    return render(request,'grid.html',{'data':data,'userData':userData}) 
 
 def home(request):
     return render(request,'home.html')
 
 def log_in(request):
-    
-    if request.method == 'POST':
-    #     try:
-    #         username =request.POST['username']
-    #         userdetails=regData.objects.get(username=request.POST['username'],password=request.POST['password'])
-    #         return render(request,'home.html',{'userDetails':userdetails,'username':username})
-    #     except regData.DoesNotExist as e:
-    #         return render(request,'login.html')
 
-        username =request.POST['username']
-        password =request.POST['password']
-        user = regData.objects.get(username=username)
-        if user.password == password:
-            login(request, user)
+
+    if request.method == 'POST':
+        try:
+            username =request.POST['username']
+            userdetails=regData.objects.get(username=request.POST['username'],password=request.POST['password'])
+            login(request, userdetails)
             # return redirect('home')
-            return render(request,'home.html',{'userDetails':user,'username':username})
-        else:
-            # messages.error(request +"Username/Password is invalid")
-            return HttpResponseRedirect("login")
+            t1=datetime.datetime.now().time().replace(microsecond=0)
+            count=Ticket.objects.filter(appli_id=request.user.id).count()
+            user_id=request.user.id
+            savet=activeUser(login_time=t1,time_id=user_id)
+            savet.save()
+            return render(request,'home.html',{'userDetails':userdetails,'username':username,'count':count})
+        except regData.DoesNotExist as e:
+            return render(request,'login.html')
+
+        # username =request.POST['username']
+        # password =request.POST['password']
+        # user = regData.objects.get(username=username)
+        # if user.password == password:
+        #     login(request, user)
+        #     # return redirect('home')
+        #     t1=datetime.datetime.now().time().replace(microsecond=0)
+
+        #     user_id=request.user.id
+        #     savet=activeUser(login_time=t1,time_id=user_id)
+        #     savet.save()
+        #     return render(request,'home.html',{'userDetails':user,'username':username})
+           
+        # else:
+        #     # messages.error(request +"Username/Password is invalid")
+        #     return redirect()
+   
+    
 
 
     else:
@@ -203,14 +265,45 @@ def log_in(request):
         #     messages.info(request,'invalid credentials')
         #     return redirect('login')
             
-     
+  
 
 # def logout(request):
 #     auth.logout(request)
 #     return redirect("/")
     # return render(request,'home.html')
-def logout(request):
-  logout(request)
+def log_out(request):
+   
+    user_id=request.user.id
+    print(user_id)
+    emp = activeUser.objects.get(pk=user_id)
+    emp.logout_time=datetime.datetime.now().time().replace(microsecond=0)
+
+    
+    t1=str(emp.login_time)
+    t2=str(emp.logout_time)
+    
+    temp1=datetime.datetime.strptime(t1,'%H:%M:%S')
+    temp2=datetime.datetime.strptime(t2,'%H:%M:%S')
+    diff=temp2-temp1
+    sec=(diff.total_seconds())
+    sec1= str(datetime.timedelta(seconds = sec))
+    print(sec1)
+    # user_id=request.user.id
+    # emp = activeUser.objects.get(pk=user_id)
+   
+    emp.TotalActiveTime=sec1
+    emp.save()
+
+    # newTime=datetime.datetime.strptime(sec1,'%H:%M:%S')
+    # print(newTime)
+    # print(t1)
+    # print(t2)
+    
+    # savet=activeUser(request.POST,logout_time=t2)
+    # savet.save()
+    logout(request)
+    return redirect('/')
+    # return(logout)
       
 
 def register(request):

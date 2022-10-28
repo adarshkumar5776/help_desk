@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HappyHD</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      </style>
+
+</head>
+
+      <body>
+
+        <h1><b><center>STATUS REPORT</h1></b></center>
+
+      <div class="container col-sm-12">
+                        <div class="bg-light text-dark">
+                           
+                        </div>
+
+                            <div class="jumbotron"
+                                 style="background-color:snow;">
+
+                            <div class="row">
+                                <div id="headerTicket" on></div>
+                                <div class="col-md-12 text-center">
+                                    <div>
+                                        <a href="tickets">
+                                         <button type="button" class="btn btn-danger" onclick="newTicket()">Add New Ticket</button>
+                                        </a>
+                                    </div>
+                               </div><br><br>
+
+                                    <div class="table-bordered table-hover table-responsive" style="width: 100%">
+                                        <table class="table" border ='1' id="ticketTable" style="background-color:dimgray">
+                                            <thead>
+                                            <tr>
+                                                <th>UserName</th>
+                                                <th>Email</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Date And Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody> 
+                                              {%for x in data%}
+
+                                               {%if user.id == x.appli_id %}
+                                              <tr>
+                                               
+                                               <td>{{user.username}}</td>
+                                               <td>{{user.email}}</td>
+                                                <td>{{x.title}}</td>
+                                                <td>{{x.status}}</td>
+                                                <td>{{x.dateTime}}</td>
+                                                <td> <form action="delete" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete">delete</button>  </form> </td>
+                                              </tr>
+                                               {%endif%}
+
+                                            {%endfor%}
+                                            
+                                          
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                        <center><a href="view">
+                                          <button type="button" class="btn btn-danger" onclick="newTicket()">View Details</button>
+                                         </a></center>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                  <div id="outerDiv"></div>
+
+
+      </body>
+</html>

@@ -20,7 +20,11 @@ urlpatterns = [
       path('view/<int:id>', views.view, name='view'),
       path('view1/<int:id>', views.view1, name='view1'),
       path('myAcc', views.myAcc, name='myAcc'),
-      path("logout/", LogoutView.as_view(), name="logout"),
+      path("logout", views.log_out, name="logout"),
+      path("filter",views.filter ,name="filter"),
+      path("changePass",views.changePass ,name="changePass"),
+      path("grid",views.grid ,name="grid"),
+      # path("back",views.back ,name="back"),
       # path('view1/view3/<int:id>', views.view3, name='view3'),
       
       # path('admin', views.delete, name='admin')
