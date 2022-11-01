@@ -1,0 +1,295 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Django CRUD Operations</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    <h1><center><b>My tickets</h1></center></b><br><br>
+<div class="container">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Title</th>
+        <th>Date and Time</th>
+		<th>Priority</th>
+		<th>Status</th>
+		
+      </tr>
+    </thead>
+    <tbody> 
+      <tr>
+        {% comment %} {% for y in datas %}
+        <td>{{y.username}}</td>
+        {% endfor %}  {% endcomment %}
+        {% comment %} <td>{{user.username}}</td>
+        <td>{{data.title}}</td>
+        <td>{{data.dateTime}}</td>
+        <td>{{data.priority}}</td>
+		    <td>{{data.status}}</td>
+		
+      </tr>
+	
+    </tbody>
+
+      {% comment %} <tbody>
+      <tr>
+        <input type="Button" value="Back">
+      </tr>
+
+	</tbody> {% endcomment %}
+{% comment %} </table>
+
+</div>
+</body>
+</html> {% endcomment %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HappyHD</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      </style>
+
+</head>
+
+      <body>
+
+        {% if filt%}
+        <h1><b><center>ALL TICKETS</h1></b></center>
+
+      <div class="container col-sm-12">
+                        <div class="bg-light text-dark">
+                           
+                        </div>
+
+                            <div class="jumbotron"
+                                 style="background-color:snow;">
+
+                            <div class="row">
+                                <div id="headerTicket" on></div>
+                                <div class="col-md-12 text-center">
+                                    {% comment %} <div>
+                                        <a href="tickets">
+                                         <button type="button" class="btn btn-danger" onclick="newTicket()">Add New Ticket</button>
+                                        </a>
+                                    </div> {% endcomment %}
+                               </div><br><br>
+
+                                    <div class="table-bordered table-hover table-responsive" style="width: 100%">
+                                        <table class="table" cellspacing="3" border="0" id="ticketTable" style="background-color:dimgray">
+                                            <thead>
+                                            <tr>
+                                                <th>UserName</th>
+                                                <th>Priority</th> 
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Date And Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody> 
+                                              {%for x in data%}
+                                                {%if x.priority == priority%}
+                                                 {%if x.status == status%}
+                                                
+                                              <tr>
+                                               
+                                                <td>{{x.appli.username}}</td>
+                                                <td>{{x.priority}}</td> 
+                                                <td>{{x.title}}</td>
+                                                <td>{{x.status}}</td>
+                                                <td>{{x.dateTime}}</td>
+                                                <td> <form action="delete" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view1' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete">Cancel</button>  </form> </td>
+                                              </tr>
+                                                  {%endif%}
+                                                 {%endif%}
+                                              {%endfor%}
+                                            
+                                          
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% comment %} <div id="outerDiv"></div>
+                  <center><a href="filter">
+                    <button type="button" class="btn btn-danger" >Filter</button>
+                   </a></center>  {% endcomment %}
+
+
+
+
+
+        {% elif userData%}
+        <h1><b><center>ALL TICKETS</h1></b></center>
+
+      <div class="container col-sm-12">
+                        <div class="bg-light text-dark">
+                           
+                        </div>
+
+                            <div class="jumbotron"
+                                 style="background-color:snow;">
+
+                            <div class="row">
+                                <div id="headerTicket" on></div>
+                                <div class="col-md-12 text-center">
+                                    {% comment %} <div>
+                                        <a href="tickets">
+                                         <button type="button" class="btn btn-danger" onclick="newTicket()">Add New Ticket</button>
+                                        </a>
+                                    </div> {% endcomment %}
+                               </div><br><br>
+
+                                    <div class="table-bordered table-hover table-responsive" style="width: 100%">
+                                        <table class="table" cellspacing="3" border="0" id="ticketTable" style="background-color:dimgray">
+                                            <thead>
+                                            <tr>
+                                                <th>UserName</th>
+                                                <th>Priority</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Date And Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody> 
+                                              {%for x in data%}
+                                              <tr>
+                                               
+                                                <td>{{x.appli.username}}</td>
+                                               <td>{{x.priority}}</td> 
+                                                <td>{{x.title}}</td>
+                                                <td>{{x.status}}</td>
+                                                <td>{{x.dateTime}}</td>
+                                                <td> <form action="delete" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view1' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete">Cancel</button>  </form> </td>
+                                               
+                                              {%endfor%}
+                                            
+                                          
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                  <div id="outerDiv"></div>
+                  <center><a href="filter">
+                    <button type="button" class="btn btn-danger" >Filter</button>
+                   </a></center>
+
+
+        {%else%}
+        <h1><b><center>MY TICKETS</h1></b></center>
+
+      <div class="container col-sm-12">
+                        <div class="bg-light text-dark">
+                           
+                        </div>
+
+                            <div class="jumbotron"
+                                 style="background-color:snow;">
+
+                            <div class="row">
+                                <div id="headerTicket" on></div>
+                                <div class="col-md-12 text-center">
+                                    <div>
+                                        <a href="tickets">
+                                         <button type="button" class="btn btn-danger" onclick="newTicket()">Add New Ticket</button>
+                                        </a>
+                                    </div>
+                               </div><br><br>
+
+                                    <div class="table-bordered table-hover table-responsive" style="width: 100%">
+                                        <table class="table" border ='1' id="ticketTable" style="background-color:dimgray">
+                                            <thead>
+                                            <tr>
+                                                <th>UserName</th>
+                                                <th>Priority</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Date And Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody> 
+                                              {%for x in data%}
+
+                                               {%if user.id == x.appli_id %}
+                                              <tr>
+                                               
+                                               <td>{{user.username}}</td>
+                                               <td>{{x.priority}}</td> 
+                                                <td>{{x.title}}</td>
+                                                <td>{{x.status}}</td>
+                                                <td>{{x.dateTime}}</td>
+                                                <td> <form action="delete" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete">delete</button>  </form> </td>
+                                              </tr>
+                                               {%endif%}
+
+                                            {%endfor%}
+                                            
+                                          
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                        {% comment %} <center><a href="view">
+                                          <button type="button" class="btn btn-danger" onclick="newTicket()">View Details</button>
+                                         </a></center> {% endcomment %}
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                  <div id="outerDiv"></div>
+      {%endif%}
+
+      {% comment %} <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+      
+<script>
+
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyB33rrdt-t4S0qBbDpCI-BsH-I-rsLViX0",
+        authDomain: "happy-help-desk.firebaseapp.com",
+        databaseURL: "https://happy-help-desk.firebaseio.com",
+        projectId: "happy-help-desk",
+        storageBucket: "",
+        messagingSenderId: "685802855804"
+    };
+    firebase.initializeApp(config);
+</script>
+      <script src="http://chancejs.com/chance.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src ="scripts/main.js" async></script>
+<script src="scripts/ticket.js" async></script>
+<script src="scripts/paginator.js"></script> {% endcomment %}
+
+      </body>
+</html>

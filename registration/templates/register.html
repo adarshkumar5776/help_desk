@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript">
+    $(document).ready(function(){
+        // Countries
+        var country_arr = new Array("Select Country","AUSTRALIA","INDIA","NEW ZEALAND","USA","UAE","MAURITIUS");
+
+        $.each(country_arr, function (i, item) {
+            $('#country').append($('<option>', {
+                value: i,
+                text : item,
+            }, '</option>' ));
+        });
+
+        // States
+        var s_a = new Array();
+        s_a[0]="Select State";
+        s_a[1]="Select State|QUEENSLAND|VICTORIA";
+        s_a[2]="Select State|ANDHRAPRADESH|KARNATAKA|TAMILNADU|DELHI|GOA|W-BENGAL|GUJARAT|MADHYAPRADESH|MAHARASHTRA|RAJASTHAN";
+        s_a[3]="Select State|AUCKLAND";
+        s_a[4]="Select State|NEWJERSEY|ILLINOIS";
+        s_a[5]="Select State|DUBAI";
+        s_a[6]="Select State|MAURITIUS";
+
+        // Cities
+        var c_a = new Array();
+        c_a['QUEENSLAND']="BRISBANE";
+        c_a['VICTORIA']="MELBOURNE";
+        c_a['ANDHRAPRADESH']="HYDERABAD";
+        c_a['KARNATAKA']="BANGLORE";
+        c_a['TAMILNADU']="CHENNAI";
+        c_a['DELHI']="DELHI";
+        c_a['GOA']="GOA";
+        c_a['W-BENGAL']="KOLKATA";
+        c_a['GUJARAT']="AHMEDABAD1|AHMEDABAD2|AHMEDABAD3|BARODA|BHAVNAGAR|MEHSANA|RAJKOT|SURAT|UNA";
+        c_a['MADHYAPRADESH']="INDORE|BHOPAL";
+        c_a['MAHARASHTRA']="MUMBAI|PUNE";
+        c_a['RAJASTHAN']="ABU";
+        c_a['AUCKLAND']="AUCKLAND";
+        c_a['NEWJERSEY']="EDISON";
+        c_a['ILLINOIS']="CHICAGO";
+        c_a['MAURITIUS']="MAURITIUS";
+        c_a['DUBAI']="DUBAI";
+
+
+        $('#country').change(function(){
+            var c = $(this).val();
+            var state_arr = s_a[c].split("|");
+            $('#state').empty();
+            $('#city').empty();
+            if(c==0){
+                $('#state').append($('<option>', {
+                    value: '0',
+                    text: 'Select State',
+                }, '</option>'));
+            }else {
+                $.each(state_arr, function (i, item_state) {
+                    $('#state').append($('<option>', {
+                        value: item_state,
+                        text: item_state,
+                    }, '</option>'));
+                });
+            }
+            $('#city').append($('<option>', {
+                value: '0',
+                text: 'Select City',
+            }, '</option>'));
+        });
+
+        $('#state').change(function(){
+            var s = $(this).val();
+            if(s=='Select State'){
+                $('#city').empty();
+                $('#city').append($('<option>', {
+                    value: '0',
+                    text: 'Select City',
+                }, '</option>'));
+            }
+            var city_arr = c_a[s].split("|");
+            $('#city').empty();
+
+            $.each(city_arr, function (j, item_city) {
+                $('#city').append($('<option>', {
+                    value: item_city,
+                    text: item_city,
+                }, '</option>'));
+            });
+
+
+        });
+    });
+</script>
+
+
+  <meta charset="UTF-8">
+  
+  <!-- Design by foolishdeveloper.com -->
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body{
+  background: linear-gradient(
+     105deg,
+     #88beee ,
+     #0a2e73
+ );
+}
+
+.wrapper{
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.registration_form{
+	background: white;
+	padding: 40px;
+	border-radius: 5px;
+	width: 500px;
+}
+
+.registration_form .title{
+	text-align: center;
+	font-size: 25px;
+	text-transform: uppercase;
+	color: white;
+  background:rgb(13, 98, 215);
+	letter-spacing: 2px;
+	font-weight: 700;
+  margin-top: -25px;
+  margin-left:-25px;
+  margin-right:-25px;
+}
+
+.form_wrap{
+	margin-top: 40px;
+}
+
+.form_wrap .input_wrap{
+	margin-bottom: 15px;
+}
+
+.form_wrap .input_wrap:last-child{
+	margin-bottom: 0;
+}
+
+.form_wrap .input_wrap label{
+	display: block;
+	margin-bottom: 3px;
+	color: #1a1a1f;
+}
+
+.form_wrap .input_grp{
+	display: flex;
+	justify-content: space-between;
+}
+
+.form_wrap .input_grp  input[type="text"]{
+	width: 160px;
+}
+
+.form_wrap  input[type="text"]{
+	width: 100%;
+	border-radius: 3px;
+	border: 1.3px solid #9597a6;
+	padding: 10px;
+	outline: none;
+}
+
+.form_wrap  input[type="text"]:focus{
+	border-color: #063abd;
+}
+
+.form_wrap ul{
+ border:1px solid rgb(115, 185, 235);
+  width:70%;
+  background: rgb(206, 238, 242);
+  margin-left: 15%;
+	padding: 8px 10px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.form_wrap ul li:first-child{
+	margin-right: 15px;
+}
+
+.form_wrap ul .radio_wrap{
+	position: relative;
+	margin-bottom: 0;
+}
+
+.form_wrap ul .radio_wrap .input_radio{
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+}
+
+.form_wrap ul .radio_wrap span{
+	display: inline-block;
+	font-size: 17px;
+	padding: 3px 15px;
+	border-radius: 15px;
+	color: #101749;
+}
+
+.form_wrap .input_radio:checked ~ span{
+	background: #105ce2;
+  color:white;
+}
+
+.form_wrap .submit_btn{
+	width: 100%;
+	background: #0d6ad7;
+	padding: 10px;
+	border: 0;
+  color:white;
+  font-size:17px;
+	border-radius: 3px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	cursor: pointer;
+}
+
+.form_wrap .submit_btn:hover{
+	background: #051c94;
+}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+  	<div class="registration_form">
+  		<div class="title">
+  			Registration Form
+            
+  		</div>
+          {% comment %} <form action="register" method ="post">
+            {% csrf_token %}
+                <input type="text" name="first_name" placeholder="First name"><br>
+                <input type="text" name="last_name" placeholder="Last name"><br>
+                <input type="text" name="username" placeholder="Username"><br>
+                <input type="email" name="email" placeholder="email"><br>
+                <input type="password" name="password1" placeholder="Password"><br>
+                <input type="password" name="password2" placeholder="Confirm Password"><br>
+                <input type="Submit">
+            </form> {% endcomment %}
+
+  		<form action="register" method="post">
+            {% csrf_token %}
+  			<div class="form_wrap">
+  				<div class="input_grp">
+  					<div class="input_wrap">
+  						<label for="fname">First Name</label>
+  						<input type="text" name="first_name" palceholder="First name" required>
+  					</div>
+  					<div class="input_wrap">
+  						<label for="lname">Last Name</label>
+  						<input type="text" name="last_name" palceholder="Last name" required>
+  					</div>
+  				</div>
+                  <div class="input_wrap">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" required >
+                </div>
+  				<div class="input_wrap">
+  					<label for="email_address">Email Address</label>
+  					<input type="text" name="email" required>
+  				</div>
+				  <div class="input_wrap">
+					<label for="address">Address</label>
+					<input type="text" name="address" required>
+				</div>
+				
+                
+				
+				 <div class="input_wrap">
+					<label for="country">Country</label>
+					<select name="country" id="country"></select>
+				</div>
+				<div class="input_wrap">
+					<label for="state">State</label>
+					<select name="state" id="state"></select>
+				</div>
+		 
+				  <div class="input_wrap">
+					<label for="city">City</label>
+					<select name="city" id="city"></select><br>
+					
+				</div>  
+				{% comment %} {% comment %} <div class="input_wrap">
+					<label for="city">City</label>
+					<select name="country" class="countries" id="countryId">
+						<option value="">Select Country</option>
+					</select> {% endcomment %}
+					{% comment %} <select name="state" class="states" id="stateId">
+						<option value="">Select State</option>
+					</select> {% endcomment %}
+					{% comment %} <select name="city" class="cities" id="cityId">
+						<option value="">Select City</option>
+					</select>
+				</div> {% endcomment %} 
+				{% comment %} {% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %} {% endcomment %}
+				
+				<div class="input_wrap">
+					<label for="mobile">Mobile no</label>
+					<input type="text" name="mobile_no" required>
+				</div>
+
+  				 <div class="input_wrap">
+					
+  					<label for="password">Password</label>
+  					<input type="password" name="password1" required>
+  				</div>
+
+             <div class="input_wrap">
+                    <label for="password">Confirm Password</label>
+                    <input type="password" name="password2" required>
+                </div> 
+
+
+
+  				<div class="input_wrap">
+  					<input type="submit" value="Register Now" class="submit_btn" required>
+  				</div>
+
+
+  			</div>
+		
+			 
+
+  		</form>
+		<br>
+		<a href="login"><b>Already Have an Account?</b></a>
+		
+        
+  	</div>
+  </div>
+  
+  
+</body>
+</html>

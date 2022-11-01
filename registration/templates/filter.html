@@ -1,0 +1,44 @@
+<html>
+<head>
+</head>
+<body>
+    <center>
+    <form action="filter" method="post">
+        {%csrf_token%}
+        <table border=1>
+        <tr>
+            <td><label>Priority</label>
+            <select name="Priority" >
+            <option value="">--Please Select--</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="low">Low </option>
+            </select>
+        </td>
+        <br>
+       </tr>
+         <tr>
+            
+            <td><label for="inputEmail4">Status</label> 
+            <select name="status" class="form-control"> 
+             <option>Select status of your Ticket</option>
+             <option>Open</option>
+             <option>close</option> 
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="submit"/></td>
+        </tr>
+        
+    </table>
+
+
+            {% comment %} <input type="submit" value="submit"/> {% endcomment %}
+         {% comment %} <input type='text' name="Priority"> {% endcomment %}
+        
+        
+    </form>
+</center>
+    
+</body>
+</html>
