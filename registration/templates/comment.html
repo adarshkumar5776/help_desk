@@ -1,0 +1,15 @@
+{% comment %} <html>
+    <head>
+        <title>COMMENTS</title>
+    </head>
+<body>
+
+<form action="view1/{{x.id}}" method='post'>
+    {%csrf_token%}
+    <p><label for="comment">COMMENTS</label></p>
+    <input  style ="height:150px" type="text" name="comment" >
+    <br>
+    <input type="submit" value="Send">
+  </form>
+</body>
+</html> {% endcomment %}

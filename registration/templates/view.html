@@ -1,0 +1,122 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function eraseText() {
+        document.getElementById("data").value = "";
+    }
+    </script>
+ </head>
+ <body>
+    {%if admin%}
+    
+    <table>
+        
+        
+          {% comment %} {%if user.id == x.appli_id %} {% endcomment %}
+        <tr>
+            <th>Name</th>
+            <td>{{ticket.appli.first_name}}</td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td>{{ticket.appli.username}}</td>
+        </tr>
+        <tr>
+            <th>Contact Numer</th>
+            <td>{{ticket.appli.mobile_no}}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ticket.appli.email}}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ticket.title}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ticket.status}}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ticket.description}}</td>
+        </tr>
+        {% comment %} {%endif%} {% endcomment %}
+
+    
+      </table>
+       <br><br><br>
+      <form  method='post'>
+        {%csrf_token%}
+        <p><label for="comment">COMMENTS</label></p>
+        <input  style ="height:150px" type="text" name="comment" >
+        <br>
+        <input type="submit" value="Send">
+      </form> 
+
+ {%else%}
+ <table>
+    
+    
+      {% comment %} {%if user.id == x.appli_id %} {% endcomment %}
+    <tr>
+        <th>Name</th>
+        <td>{{user.first_name}}</td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td>{{user.username}}</td>
+    </tr>
+    <tr>
+        <th>Contact Numer</th>
+        <td>{{user.mobile_no}}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>{{ticket.title}}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ticket.status}}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ticket.description}}</td>
+    </tr>
+    {% comment %} {%endif%} {% endcomment %}
+
+
+  </table>
+  <br><br><br>
+  COMMENTS
+  <form name="form">
+    
+    <textarea disabled="disabled" id='data' rows="8" cols="40" name="comment" form="usrform"> 
+     
+     {%for x in com%} 
+      {{x.Comments}}
+      {%endfor%} 
+      
+    </textarea> 
+    <input type="button" value="Clear" onclick="javascript:eraseText();">
+ 
+   </form>
+      
+
+    
+{%endif%}
+{% comment %} <hr style="width:100%;text-align:left;margin-left:0"> {% endcomment %}
+
+    
+    
+ </body>
+ </html>

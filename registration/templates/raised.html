@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <style>
+    th {
+        cursor: pointer;
+        background-color: coral;
+      }
+    </style>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+</head>
+<body style="background-color:lightblue;">
+
+  <center><h1 color="blue"><b>Raised Calls</b></h1></center><br>
+
+<div class="container">
+	<div class="row">
+		
+        
+        <div class="col-md-12">
+        
+        <div class="table-responsive">
+
+                
+              <table  border ='1' id="usersTable" class="table table-bordred table-striped">
+                   
+                   <thead style="background-color:grey;">
+                   
+                   <th> </th>
+                   <th>ID No.</th>
+                   <th>Name</th>
+                   <th>Action</th>
+                  
+                   </thead>
+                   
+                   <tbody> 
+                    {%for x in data%}
+                   
+                    <tr class="item">
+                    <td><input type="checkbox" class="checkthis" /></td>
+                    <td>{{x.contact_id_id}}</td>
+                    <td>{{x.name}}</td> 
+
+                    <td> <form action="delete1" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view3' id=x.id %}">View</a> </button> <button type="submit" value="{{x.id}}" name="delete1">Delete</button>  </form> </td>
+                    {% comment %} <td> <form action="delete1" method="post"> {% csrf_token %} <button type="button" value="view" name=""> <a href="{% url 'view3' id=x.id %}">View</a> </button> <button type="submit" value="delete" name=""> <a href="{% url 'delete1' id=x.id %}">Delete</a></button>  </form> </td> {% endcomment %}
+                  </tr>
+                     
+                  {%endfor%}
+                  
+                
+                  </tbody>    
+</table>
+
+<div class="clearfix"></div>
+<ul class="pagination pull-right">
+  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+  <li class="active"><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+</ul>
+                
+            </div>
+            
+        </div>
+	</div>
+</div>
+</body>
+</html>
